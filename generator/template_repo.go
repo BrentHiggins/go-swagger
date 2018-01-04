@@ -11,6 +11,7 @@ import (
 	"strings"
 	"text/template"
 	"text/template/parse"
+         "hash/fnv"
 
 	"log"
 
@@ -100,6 +101,14 @@ var FuncMap template.FuncMap = map[string]interface{}{
 	"mediaTypeName": func(orig string) string {
 		return strings.SplitN(orig, ";", 2)[0]
 	},
+        "cap": func(str string) string {
+                if len(str) > 231 {
+                        h := fnv.New32()
+                        h.Write([]byte(str))
+                        return str[0:200] + string(h.Sum32())
+                }
+                return str
+        },
 }
 
 func init() {
