@@ -102,10 +102,10 @@ var FuncMap template.FuncMap = map[string]interface{}{
 		return strings.SplitN(orig, ";", 2)[0]
 	},
         "cap": func(str string) string {
-                if len(str) > 231 {
+                if len(str) > 217 {
                         h := fnv.New32()
                         h.Write([]byte(str))
-                        return str[0:200] + string(h.Sum32())
+                        return str[0:186] + fmt.Sprint(h.Sum32())
                 }
                 return str
         },
